@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Libro
+from .models import Libro, Post
 from .forms import LibroForm
 
 def inicial(request):
@@ -32,3 +32,7 @@ def listado_libros(request):
 
 def nosotros(request):
     return render(request, 'nosotros.html')
+
+
+
+
