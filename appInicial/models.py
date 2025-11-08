@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Libro(models.Model):
     titulo = models.CharField(max_length=200)
@@ -8,3 +9,12 @@ class Libro(models.Model):
     
     def __str__(self):
         return f"{self.titulo} por {self.autor}"
+
+class Post(models.Model):
+    titulo = models.CharField(max_length=250)
+    contenido = models.TextField()
+    fecha_publicacion = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.titulo
+    
