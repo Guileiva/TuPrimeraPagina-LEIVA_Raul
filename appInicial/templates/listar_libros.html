@@ -1,1 +1,43 @@
-Listado de Libros
+{% extends 'base.html' %} 
+
+{% block content_title %}
+    Listado de Libros en Stock
+{% endblock content_title %}
+
+
+{% block content %}
+    
+    {% if libros %}
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Precio</th>
+                    <th>Stock</th>                     
+                </tr>
+            </thead>
+            <tbody>
+                {% for libro in libros %}
+                <tr>
+                    <td>{{ libro.titulo }}</td>
+                    <td>{{ libro.autor }}</td>
+                    <td>{{ libro.precio }}</td>
+                    <td>{{ libro.stock }}</td>                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">¡No hay libros!</h4>
+            <p>No hay libros registrados aún en el inventario.</p>
+            <hr>
+            <a href="{% url 'crear_libro' %}" class="btn btn-info">Agregar el primer libro</a>
+        </div>        
+    {% endif %}
+    
+    <div class="text-center mt-5">
+        <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">Volver a la Página Principal</a>
+    </div>
+{% endblock content %}

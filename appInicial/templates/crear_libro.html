@@ -1,2 +1,36 @@
-El libro esta creado
+{% extends 'base.html' %} 
+
+{# Usa el bloque 'content_title' para el título H1 centrado #}
+{% block content_title %}
+    Ingresar Nuevo Libro
+{% endblock content_title %}
+
+{% block content %}
+    {# Estructura Bootstrap para centrar el formulario #}
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm p-4">
+                
+                <form method="post">
+                    {% csrf_token %} 
+                    
+                    {# Renderiza el formulario. Esto usa el estilo por defecto de Django, que es simple. #}
+                    {{ form.as_p }}
+                    
+                    <div class="d-grid mt-3">
+                        <button type="submit" class="btn btn-info">
+                            💾 Guardar Libro
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+                        
+        <div class="text-center mt-5">
+            <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">Volver a la Página Principal</a>
+        </div>
+        </div>
+    </div>
+{% endblock content %}
+
 

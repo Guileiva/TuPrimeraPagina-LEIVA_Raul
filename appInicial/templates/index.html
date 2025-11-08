@@ -1,1 +1,59 @@
-<h1>Hola soy la pagina principal</h1>
+{% extends 'base.html' %} 
+
+{% block content_title %}
+    Bienvenido a Bookish Online
+{% endblock content_title %}
+
+{% block content %}
+    
+    <p class="lead text-center mb-5">
+        Tu plataforma de gestión de libros de manera online!
+    </p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        
+        <div class="col">
+            <a href="{% url 'crear_libro' %}" class="card h-100 text-decoration-none border-success shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success">Cargar Nuevo Libro</h5>
+                    <p class="card-text text-muted">
+                        Añade títulos, autores, precios y unidades a tu inventario.
+                    </p>
+                </div>                
+                <div class="card-footer bg-success text-white">
+                    Ir a Cargar →
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'lista_libros' %}" class="card h-100 text-decoration-none border-primary shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-primary">Explorar Inventario</h5>
+                    <p class="card-text text-muted">
+                        Visualiza el stock de todos tus libros.
+                    </p>
+                </div>                
+                <div class="card-footer bg-primary text-white">
+                    Ir a Listado →
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'sobre_nosotros' %}" class="card h-100 text-decoration-none border-secondary shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-secondary">Sobre Nosotros</h5>
+                    <p class="card-text text-muted">
+                        Conoce la historia, los valores y la misión de Bookish Online.
+                    </p>
+                </div>                
+                <div class="card-footer bg-secondary text-white">
+                    Ver Historia →
+                </div>
+            </a>
+        </div>
+        
+    </div>
+    
+{% endblock content %}
