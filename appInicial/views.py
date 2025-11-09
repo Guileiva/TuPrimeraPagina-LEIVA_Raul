@@ -23,7 +23,7 @@ def crear_libro(request):
 
 def listado_libros(request):
     try:
-        lista = Libro.objects.all()
+        lista = Libro.objects.all().order_by('-pk')
         contexto = {'libros': lista}
     except Exception as e:
         print(f'Ocurrio un error al listar los libros {e}')

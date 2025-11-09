@@ -7,7 +7,7 @@
 {% block content %}
     
     <p class="lead text-center mb-5">
-        Tu plataforma de gestión de libros de manera online!
+        Tu plataforma para crear, gestionar y publicar reseñas de libros online.
     </p>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -15,13 +15,13 @@
         <div class="col">
             <a href="{% url 'crear_libro' %}" class="card h-100 text-decoration-none border-success shadow-lg">
                 <div class="card-body text-center">
-                    <h5 class="card-title text-success">Cargar Nuevo Libro</h5>
+                    <h5 class="card-title text-success">Crear Nueva Reseña</h5>
                     <p class="card-text text-muted">
-                        Añade títulos, autores, precios y unidades a tu inventario.
+                        Añade el título, autor y la sinopsis de un nuevo libro.
                     </p>
                 </div>                
                 <div class="card-footer bg-success text-white">
-                    Ir a Cargar →
+                    Ir a Cargar Post→
                 </div>
             </a>
         </div>
@@ -29,13 +29,13 @@
         <div class="col">
             <a href="{% url 'lista_libros' %}" class="card h-100 text-decoration-none border-primary shadow-lg">
                 <div class="card-body text-center">
-                    <h5 class="card-title text-primary">Explorar Inventario</h5>
+                    <h5 class="card-title text-primary">Explorar Catálogo de Reseñas</h5>
                     <p class="card-text text-muted">
-                        Visualiza el stock de todos tus libros.
+                        Revisa todos los libros publicados y sus sinopsis.
                     </p>
                 </div>                
                 <div class="card-footer bg-primary text-white">
-                    Ir a Listado →
+                    Ir al Blog →
                 </div>
             </a>
         </div>
@@ -45,7 +45,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title text-secondary">Sobre Nosotros</h5>
                     <p class="card-text text-muted">
-                        Conoce la historia, los valores y la misión de Bookish Online.
+                        Conoce nuestra misión como plataforma de contenido literario.
                     </p>
                 </div>                
                 <div class="card-footer bg-secondary text-white">

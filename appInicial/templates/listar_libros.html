@@ -1,43 +1,39 @@
 {% extends 'base.html' %} 
 
 {% block content_title %}
-    Listado de Libros en Stock
+    Catálogo de Libros y Reseñas
 {% endblock content_title %}
 
 
 {% block content %}
-    
+
     {% if libros %}
-        <table class="table table-striped table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>Título</th>
-                    <th>Autor</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>                     
-                </tr>
-            </thead>
-            <tbody>
-                {% for libro in libros %}
-                <tr>
-                    <td>{{ libro.titulo }}</td>
-                    <td>{{ libro.autor }}</td>
-                    <td>{{ libro.precio }}</td>
-                    <td>{{ libro.cantidad }}</td>                    
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <div class="alert alert-info text-center" role="alert">
-            <h4 class="alert-heading">¡No hay libros!</h4>
-            <p>No hay libros registrados aún en el inventario.</p>
-            <hr>
-            <a href="{% url 'crear_libro' %}" class="btn btn-info">Agregar el primer libro</a>
-        </div>        
-    {% endif %}
+        {% for libro in libros %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <h2 class="card-title mb-0">{{ libro.titulo }}</h2>
+                        <small class="text-muted text-nowrap">
+                            Publicado el {{ libro.fecha_publicacion|date:"d F Y" }}
+                        </small>
+                    </div>
+                    <p class="card-subtitle text-muted mb-3">
+                        Autor: <strong>{{ libro.autor }}</strong>
+                    </p>
     
-    <div class="text-center mt-5">
-        <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">Volver a la Página Principal</a>
-    </div>
+                    <p class="card-text descripcion-breve">
+                        {{ libro.sinopsis | truncatechars:200 }} 
+                    </p> 
+                                        
+                </div>
+            </div>
+        {% endfor %}
+
+    {% else %}
+            {% endif %}
+    
+    <div class="text-center mt-5">
+        <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">Volver a la Página Principal</a>
+    </div>
 {% endblock content %}
