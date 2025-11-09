@@ -15,10 +15,10 @@ Este proyecto es una aplicación web desarrollada con Django y Bootstrap 5, sigu
 Las principales funcionalidades del proyecto se prueban en el siguiente orden:
 
 1.  **Página Principal (Home):** Accede a `http://127.0.0.1:8000/`. Desde aquí, puedes navegar a las dos funciones principales.
-2.  **Cargar Libro (CREATE):**
+2.  **Cargar Libro:**
     * Ve a la URL: `/crear-libro/` (o haz clic en "Cargar Libro" en el navbar).
     * Inserta Título, Autor, Precio y Stock. El formulario maneja la inserción de datos.
-3.  **Listado de Libros (READ):**
+3.  **Listado de Libros:**
     * Ve a la URL: `/listar-libros/` (o haz clic en "Ver Libros" en el navbar).
     * Esta vista (`listar_libros`) muestra todos los objetos creados.
 4.  **Una breve historia sobre nosotros:**

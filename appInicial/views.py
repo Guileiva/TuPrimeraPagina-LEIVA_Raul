@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Libro, Post
+from .models import Libro
 from .forms import LibroForm
 
 def inicial(request):
