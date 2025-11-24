@@ -1,0 +1,62 @@
+{% extends 'base.html' %} 
+
+{% block content_title %}
+    📰 Anuncios y Novedades
+{% endblock content_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+            <h1 class="mb-5">Últimas Novedades de Bookish</h1>
+            
+            {% if noticia_principal %}
+                
+                <div class="card mb-5 p-4 bg-success-subtle text-dark shadow-lg">
+                    <span class="badge bg-warning text-dark mb-2" style="width: fit-content;"></span>
+                    <h2>{{ noticia_principal.titulo }}</h2>
+                    <p class="text-dark-50">Publicado: {{ noticia_principal.fecha|date:"d M Y" }}</p>
+                    <hr>
+                    
+                    <div class="text-break">
+                        {{ noticia_principal.contenido|truncatechars:400|linebreaksbr }}
+                    </div>
+                    
+                    <a href="{% url 'detalle_anuncio' pk=noticia_principal.pk %}" class="btn btn-warning mt-3" style="width: fit-content;">
+                        Leer Contenido Completo →
+                    </a>
+                </div>
+                
+            {% endif %}
+            
+            
+            {% if otras_novedades %}
+            
+                <h3 class="mt-4 mb-3 border-bottom pb-2">Anuncios Anteriores</h3>
+                <div class="row">
+                    {% for anuncio in otras_novedades %}
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info">{{ anuncio.titulo }}</h5>
+                                    <p class="card-subtitle text-muted mb-3"><small>{{ anuncio.fecha|date:"d M Y" }}</small></p>
+                                    
+                                    <p class="card-text text-break">{{ anuncio.contenido|truncatechars:100 }}</p>
+                                    
+                                    <a href="{% url 'detalle_anuncio' pk=anuncio.pk %}" class="btn btn-sm btn-outline-info">
+                                        Ver Detalle
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% elif not noticia_principal %}
+                <p class="alert alert-info">Aún no hay anuncios o novedades publicados en este momento.</p>
+            {% endif %}
+            <div class="text-center mt-5">
+                <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">Volver a la Página Principal</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

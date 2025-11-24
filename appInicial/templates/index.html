@@ -1,59 +1,119 @@
 {% extends 'base.html' %} 
+{% load static %}
+{% load crispy_forms_tags %} 
 
 {% block content_title %}
     Bienvenido a Bookish Online
 {% endblock content_title %}
 
 {% block content %}
+
+    <!-- 1. SECCIÓN PRINCIPAL (CALL TO ACTION) -->
+    <header class="text-center p-5 bg-light rounded-3 shadow mb-5">
+        <h1 class="display-4 fw-bold text-dark">Bookish Online: El Catálogo Rápido e Intuitivo</h1>
+        <p class="lead mt-3 mb-4 text-muted">
+            Tu plataforma para crear, gestionar y publicar reseñas de libros online. Simplificamos el proceso editorial.
+        </p>
+
+        <!-- Botones de Acción Global -->
+        <a href="{% url 'lista_libros' %}" class="btn btn-primary btn-lg me-3">
+            <i class="bi bi-book-half"></i> Explorar el Catálogo
+        </a>
+
+        {% if user.is_superuser %}
+            <!-- ACCIÓN CLAVE PARA ADMIN: Crear nuevo libro -->
+            <a href="{% url 'crear_libro' %}" class="btn btn-success btn-lg">
+                <i class="bi bi-plus-circle-fill"></i> Añadir Nuevo Libro
+            </a>
+        {% endif %}
+    </header>
+
+    <!-- 2. SECCIÓN DE TARJETAS DE NAVEGACIÓN (Tarjetas de Acceso Rápido 3x) -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4 text-secondary border-bottom pb-2">Navegación Esencial</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            
+            <!-- Tarjeta 1: GESTIÓN DE LIBROS (SOLO ADMIN) o Explorar Catálogo (USUARIO) -->
+            {% if user.is_superuser %}
+            <div class="col">
+                <a href="{% url 'lista_libros' %}" class="card h-100 text-decoration-none border-success shadow-sm hover-grow" title="Administrar Libros y Reseñas">
+                    <div class="card-body text-center">
+                        <i class="bi bi-gear display-5 text-success mb-3"></i>
+                        <h5 class="card-title text-success">Gestión de Contenido</h5>
+                        <p class="card-text text-muted">
+                            Administra y modifica todos los libros y reseñas del catálogo.
+                        </p>
+                    </div> 
+                    <div class="card-footer bg-success text-white fw-bold">
+                        Panel de Control →
+                    </div>
+                </a>
+            </div>
+            {% else %}
+            <!-- Si no es admin, esta columna será el Explorador Principal -->
+            <div class="col">
+                <a href="{% url 'lista_libros' %}" class="card h-100 text-decoration-none border-primary shadow-sm hover-grow">
+                    <div class="card-body text-center">
+                        <i class="bi bi-search display-5 text-primary mb-3"></i>
+                        <h5 class="card-title text-primary">Explorar Catálogo</h5>
+                        <p class="card-text text-muted">
+                            Revisa todos los libros publicados y utiliza el buscador avanzado.
+                        </p>
+                    </div> 
+                    <div class="card-footer bg-primary text-white fw-bold">
+                        Ir al Catálogo →
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+
+            <!-- Tarjeta 2: ANUNCIOS Y NOTICIAS (NUEVO) -->
+            <div class="col">
+                <!-- Nota: Debes crear la URL 'anuncios' en tu urls.py y la vista correspondiente -->
+                <a href="{% url 'lista_anuncios' %}" class="card h-100 text-decoration-none border-info shadow-sm hover-grow">
+                    <div class="card-body text-center">
+                        <i class="bi bi-megaphone display-5 text-info mb-3"></i>
+                        <h5 class="card-title text-info">Anuncios y Novedades</h5>
+                        <p class="card-text text-muted">
+                            Conoce las últimas actualizaciones y noticias de la plataforma.
+                        </p>
+                    </div> 
+                    <div class="card-footer bg-info text-dark fw-bold">
+                        Ver Noticias →
+                    </div>
+                </a>
+            </div>
+
+            <!-- Tarjeta 3: Sobre Nosotros (Todos) -->
+            <div class="col">
+                <a href="{% url 'sobre_nosotros' %}" class="card h-100 text-decoration-none border-secondary shadow-sm hover-grow">
+                    <div class="card-body text-center">
+                        <i class="bi bi-info-circle display-5 text-secondary mb-3"></i>
+                        <h5 class="card-title text-secondary">Sobre Bookish Online</h5>
+                        <p class="card-text text-muted">
+                            Conoce la misión y el equipo detrás de esta plataforma literaria.
+                        </p>
+                    </div>
+                    <div class="card-footer bg-secondary text-white fw-bold">
+                        Ver Misión →
+                    </div>
+                </a>
+            </div>
+            
+        </div>
+    </section>
     
-    <p class="lead text-center mb-5">
-        Tu plataforma para crear, gestionar y publicar reseñas de libros online.
-    </p>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        
-        <div class="col">
-            <a href="{% url 'crear_libro' %}" class="card h-100 text-decoration-none border-success shadow-lg">
-                <div class="card-body text-center">
-                    <h5 class="card-title text-success">Crear Nueva Reseña</h5>
-                    <p class="card-text text-muted">
-                        Añade el título, autor y la sinopsis de un nuevo libro.
-                    </p>
-                </div>                
-                <div class="card-footer bg-success text-white">
-                    Ir a Cargar Post→
-                </div>
-            </a>
-        </div>
+    <!-- CSS personalizado para efectos visuales (Opcional, pero recomendado) -->
+    <style>
+        /* Efecto de crecimiento al pasar el mouse por las tarjetas de navegación */
+        .hover-grow {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-grow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+        }
+    </style>
 
-        <div class="col">
-            <a href="{% url 'lista_libros' %}" class="card h-100 text-decoration-none border-primary shadow-lg">
-                <div class="card-body text-center">
-                    <h5 class="card-title text-primary">Explorar Catálogo de Reseñas</h5>
-                    <p class="card-text text-muted">
-                        Revisa todos los libros publicados y sus sinopsis.
-                    </p>
-                </div>                
-                <div class="card-footer bg-primary text-white">
-                    Ir al Blog →
-                </div>
-            </a>
-        </div>
-
-        <div class="col">
-            <a href="{% url 'sobre_nosotros' %}" class="card h-100 text-decoration-none border-secondary shadow-lg">
-                <div class="card-body text-center">
-                    <h5 class="card-title text-secondary">Sobre Nosotros</h5>
-                    <p class="card-text text-muted">
-                        Conoce nuestra misión como plataforma de contenido literario.
-                    </p>
-                </div>                
-                <div class="card-footer bg-secondary text-white">
-                    Ver Historia →
-                </div>
-            </a>
-        </div>
-        
-    </div>
-    
 {% endblock content %}

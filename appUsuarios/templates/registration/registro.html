@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+
+{% block content_title %}
+    Crear Nueva Cuenta
+{% endblock content_title %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h2 class="card-title text-center mb-4">Registro</h2>
+            
+            <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {{ form|crispy }}
+                    
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                    </div>
+                </form>
+            
+            <p class="text-center mt-3">
+                ¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia Sesión</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

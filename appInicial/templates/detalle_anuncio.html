@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+
+{% block content_title %}
+    Anuncio: {{ anuncio.titulo }}
+{% endblock content_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <article class="mt-4 p-4 border rounded shadow-sm bg-light">
+                <h1 class="mb-3">{{ anuncio.titulo }}</h1>
+                <p class="text-muted border-bottom pb-3">
+                    Publicado el: **{{ anuncio.fecha|date:"d M Y, H:i" }}**
+                </p>
+                
+                <div class="mt-4 text-break">
+                    {{ anuncio.contenido|linebreaksbr }}
+                </div>
+                
+                <hr class="mt-5">
+                <a href="{% url 'lista_anuncios' %}" class="btn btn-outline-secondary">
+                    ← Volver a Novedades
+                </a>
+            </article>
+        </div>
+    </div>
+{% endblock content %}

@@ -6,14 +6,35 @@
 
 
 {% block content %}
+    <div class="row mb-4 justify-content-center">
+        <div class="col-md-8">
+            <form method="GET" action="">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Buscar por título o autor..." value="{{ request.GET.q|default_if_none:'' }}">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-search"></i> Buscar
+                    </button>
+                    {% if request.GET.q %}
+                        <a href="{% url 'lista_libros' %}" class="btn btn-outline-secondary" title="Limpiar búsqueda">
+                            ✕
+                        </a>
+                    {% endif %}
+                </div>
+            </form>
 
+        </div>
+    </div>
     {% if libros %}
         {% for libro in libros %}
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     
                     <div class="d-flex justify-content-between align-items-baseline">
-                        <h2 class="card-title mb-0">{{ libro.titulo }}</h2>
+                        <h2 class="card-title mb-0">
+                            <a href="{% url 'detalle_libro' pk=libro.pk %}" class="text-decoration-none text-dark">
+                                {{ libro.titulo }}
+                            </a>
+                        </h2>
                         <small class="text-muted text-nowrap">
                             Publicado el {{ libro.fecha_publicacion|date:"d F Y" }}
                         </small>
@@ -21,19 +42,60 @@
                     <p class="card-subtitle text-muted mb-3">
                         Autor: <strong>{{ libro.autor }}</strong>
                     </p>
+
+                    <div class="mb-3">
+                        <span class="badge bg-secondary">
+                            {% with total_resenas=libro.reseñas.count %}
+                                {{ total_resenas }} Reseña{{ total_resenas|pluralize }}
+                            {% endwith %}
+                        </span>
+                    </div>
     
                     <p class="card-text descripcion-breve">
                         {{ libro.sinopsis | truncatechars:200 }} 
                     </p> 
-                                        
+
+                    <a href="{% url 'detalle_libro' pk=libro.pk %}" class="btn btn-outline-primary btn-sm mt-2">
+                        Ver Detalles y Reseñas →                  
+                    </a>
+                    {% if user.is_superuser %}
+                        <div class="mt-3 pt-3 border-top d-flex justify-content-end">
+                            <a href="{% url 'editar_libro' pk=libro.pk %}" class="btn btn-sm btn-success text-white me-2">
+                                <i class="bi bi-pencil-square"></i> Modificar
+                            </a>
+                            
+                            <a href="{% url 'eliminar_libro' pk=libro.pk %}" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    {% endif %}                    
+
                 </div>
             </div>
-        {% endfor %}
+        {% endfor %}
 
-    {% else %}
-            {% endif %}
-    
-    <div class="text-center mt-5">
-        <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">Volver a la Página Principal</a>
-    </div>
+    {% else %}
+            <div class="alert alert-warning text-center" role="alert">
+                {% if request.GET.q %}
+                    <h4>🤔 No encontramos nada</h4>
+                    <p>No se encontraron libros que coincidan con "<strong>{{ request.GET.q }}</strong>".</p>
+                    <a href="{% url 'lista_libros' %}" class="btn btn-sm btn-outline-dark mt-2">Ver todos los libros</a>
+                {% else %}
+                    <h4>📚 El catálogo está vacío</h4>
+                    <p>¡Aún no hay libros en el catálogo!</p>
+                    {% if user.is_superuser %}
+                        <p class="mb-0">Como administrador, puedes ser el primero en añadir un libro.</p>
+                        <a href="{% url 'crear_libro' %}" class="btn btn-warning mt-2">
+                            <i class="bi bi-plus-circle"></i> Agregar Nuevo Libro
+                        </a>
+                    {% else %}
+                        <p class="mb-0">Vuelve más tarde, ¡estamos actualizando la estantería!</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+    {% endif %}
+    
+        <div class="text-center mt-5">
+            <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">Volver a la Página Principal</a>
+        </div>
 {% endblock content %}

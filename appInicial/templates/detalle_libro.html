@@ -1,0 +1,112 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load crispy_forms_tags %} 
+
+{% block content_title %}
+    Detalle del Libro: {{ libro.titulo }}
+{% endblock content_title %}
+
+{% block content %}
+
+<div class="row">
+    
+    <div class="col-lg-8">
+        <article class="mb-5">
+            <h2 class="mb-3">{{ libro.titulo }}</h2>
+            <p class="lead">
+                Autor: **{{ libro.autor }}** 
+            </p>
+            <div class="sinopsis mt-4 p-3 bg-light border rounded clearfix"> 
+                <h4 class="mb-3 text-primary">Sinopsis</h4>
+                {% if libro.imagen %}
+                    <img src="{{ libro.imagen.url }}"
+                    alt="Portada de {{ libro.titulo }}"
+                    class="img-fluid rounded me-3 mb-3 float-start" {# Clases para flotar y margen #}
+                    style="width: 120px; height: 180px; object-fit: cover;"> {# Tamaño fijo y recorte #}
+                {% else %}
+                    <div class="float-start me-3 mb-3 text-center border rounded p-2 bg-white"
+                        style="width: 120px; height: 180px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <i class="bi bi-book-half text-secondary" style="font-size: 2rem;"></i>
+                        <small class="text-muted">Sin portada</small>
+                    </div>
+                {% endif %}
+                <p class="text-break">
+                    {{ libro.sinopsis|linebreaksbr }} 
+                </p>
+            </div>
+            <div class="mt-4">
+                <a href="{% url 'lista_libros' %}" class="btn btn-outline-secondary">
+                    ← Volver al Catálogo
+                </a>
+            </div> 
+        </article>
+
+        <hr>
+
+        <section class="mt-5">
+            <h3>Comentarios y Reseñas ({{ reseñas|length }})</h3>
+
+             {% for resena in reseñas %}
+            <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title mb-1">
+                                Reseña de **{{ resena.usuario.username }}**
+                            </h5>
+                                                     
+                            {% if user.is_authenticated and user == resena.usuario or user.is_superuser %}
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'modificar_resena' pk=resena.pk %}" class="btn btn-info">
+                                        Editar
+                                    </a>
+                                    <a href="{% url 'eliminar_resena' pk=resena.pk %}" class="btn btn-danger">
+                                        Eliminar
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="text-warning mb-2">
+                            Puntuación: {{ resena.puntuacion }}/5
+                        </div>
+                        <p class="card-text">{{ resena.texto|linebreaksbr }}</p>
+                        
+                        <footer class="blockquote-footer mt-2">
+                            Publicado el: {{ resena.fecha_creacion|default:"Fecha desconocida"|date:"d M Y" }}
+                        </footer>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="alert alert-info">Aún no hay reseñas para este libro. ¡Sé el primero en comentar!</p>
+            {% endfor %}
+        </section>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card bg-light border-success p-3 sticky-top" style="top: 20px;">
+            <h4 class="card-title text-center text-success">
+                {% if user.is_authenticated %}
+                    Deja tu Reseña
+                {% else %}
+                    Inicia Sesión para Comentar
+                {% endif %}
+            </h4>
+
+            {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'crear_resena' libro_pk=libro.pk %}">
+                    {% csrf_token %}
+
+                    {{ form_reseña|crispy }} 
+
+                    <button type="submit" class="btn btn-success w-100 mt-3">Enviar Reseña</button>
+                </form>
+            {% else %}
+                <p class="text-center">
+                    <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary w-100">Iniciar Sesión</a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

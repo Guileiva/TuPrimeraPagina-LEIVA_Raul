@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %} 
+
+{% block content_title %}
+    Modificar Libro: {{ libro.titulo }}
+{% endblock content_title %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">✏️ Editar Libro: **{{ libro.titulo }}**</h2>
+            
+            <form method="post" enctype="multipart/form-data"> 
+                {% csrf_token %}
+                
+                {# El objeto 'form' ya viene precargado con los datos del libro #}
+                {{ form|crispy }} 
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'detalle_libro' pk=libro.pk %}" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+                    
+                    <button type="submit" class="btn btn-success">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

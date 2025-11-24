@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %} 
+
+{% block content_title %}
+    Modificar Reseña
+{% endblock content_title %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">✍️ Editar tu Reseña</h2>
+            
+            <p class="lead">Libro: **{{ resena.libro.titulo }}**</p>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                {# El objeto 'form' ya viene precargado con los datos de la reseña #}
+                {{ form|crispy }} 
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'detalle_libro' pk=resena.libro.pk %}" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+                    
+                    <button type="submit" class="btn btn-success">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+
+{% block content_title %}
+    Eliminar Libro
+{% endblock content_title %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4 shadow-lg border-danger">
+                <h2 class="text-danger">¡Confirmar Eliminación!</h2>
+                <hr>
+                
+                <p>¿Estás seguro de que quieres eliminar permanentemente el libro:</p>
+                <h4 class="text-info">"{{ libro.titulo }}"</h4>
+                <p>Esta acción no se puede deshacer.</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <button type="submit" class="btn btn-danger mt-3 mr-2">Sí, Eliminar</button>
+                    <a href="{% url 'detalle_libro' pk=libro.pk %}" class="btn btn-secondary mt-3">Cancelar</a>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
