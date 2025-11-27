@@ -12,7 +12,7 @@ Este proyecto es una aplicación web desarrollada con Django y Bootstrap 5, sigu
 https://youtu.be/T0neeS-5Qug
 
 
-### 🛠️ Configuración Inicial
+## 🛠️ Configuración Inicial
 
 1. Clona o descarga el repositorio: `git git clone https://github.com/Guileiva/TuPrimeraPagina-LEIVA_Raul.git`
 2. Crea y activa el entorno virtual: `python -m venv .venv` - `. .venv/Scripts/activate`
@@ -23,7 +23,7 @@ https://youtu.be/T0neeS-5Qug
 5. Crea un Superusuario (Administrador): `python manage.py createsuperuser`
 6. Ejecuta el servidor: `python manage.py runserver`
 
-### 📋 Prueba y Funcionalidades
+## 📋 Prueba y Funcionalidades
 
 Las principales funcionalidades del proyecto son:
 
