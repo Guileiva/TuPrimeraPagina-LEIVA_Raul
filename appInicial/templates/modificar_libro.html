@@ -13,7 +13,6 @@
             <form method="post" enctype="multipart/form-data"> 
                 {% csrf_token %}
                 
-                {# El objeto 'form' ya viene precargado con los datos del libro #}
                 {{ form|crispy }} 
                 
                 <div class="d-flex justify-content-between mt-4">
