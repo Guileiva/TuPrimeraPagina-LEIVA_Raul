@@ -11,11 +11,9 @@
         <div class="card p-4 shadow-sm">
             <h2 class="card-title text-center mb-4 text-primary">Iniciar Sesión</h2>
             
-            <form method="post">
+            <form action={% url 'login' %}  method='POST'>
                 {% csrf_token %}
-                
-                {# Django envía el formulario de autenticación (AuthenticationForm) #}
-                {{ form|crispy }} 
+                {{ form|crispy }}
                 
                 <button type="submit" class="btn btn-success w-100 mt-3">Iniciar Sesión</button>
             </form>
@@ -25,9 +23,7 @@
             <p class="text-center mt-3">
                 ¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a>.
             </p>
-            <p class="text-center">
-                <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
-            </p>
+            
         </div>
     </div>
 </div>

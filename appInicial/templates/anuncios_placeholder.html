@@ -14,7 +14,7 @@
                 <div class="card mb-5 p-4 bg-success-subtle text-dark shadow-lg">
                     <span class="badge bg-warning text-dark mb-2" style="width: fit-content;"></span>
                     <h2>{{ noticia_principal.titulo }}</h2>
-                    <p class="text-dark-50">Publicado: {{ noticia_principal.fecha|date:"d M Y" }}</p>
+                    <p class="text-dark-50">Publicado: {{ noticia_principal.fecha|date:"d F Y" }}</p>
                     <hr>
                     
                     <div class="text-break">
@@ -38,7 +38,7 @@
                             <div class="card h-100 shadow-sm">
                                 <div class="card-body">
                                     <h5 class="card-title text-info">{{ anuncio.titulo }}</h5>
-                                    <p class="card-subtitle text-muted mb-3"><small>{{ anuncio.fecha|date:"d M Y" }}</small></p>
+                                    <p class="card-subtitle text-muted mb-3"><small>{{ anuncio.fecha|date:"d F Y" }}</small></p>
                                     
                                     <p class="card-text text-break">{{ anuncio.contenido|truncatechars:100 }}</p>
                                     
@@ -52,7 +52,7 @@
                 </div>
 
             {% elif not noticia_principal %}
-                <p class="alert alert-info">Aún no hay anuncios o novedades publicados en este momento.</p>
+                <p class="alert alert-info">Aún no hay anuncios o novedades. Vuelve más tarde, ¡estamos actualizando!</p>
             {% endif %}
             <div class="text-center mt-5">
                 <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">Volver a la Página Principal</a>

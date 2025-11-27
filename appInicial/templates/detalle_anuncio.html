@@ -10,7 +10,7 @@
             <article class="mt-4 p-4 border rounded shadow-sm bg-light">
                 <h1 class="mb-3">{{ anuncio.titulo }}</h1>
                 <p class="text-muted border-bottom pb-3">
-                    Publicado el: **{{ anuncio.fecha|date:"d M Y, H:i" }}**
+                    Publicado el: {{ anuncio.fecha|date:"d F Y" }}
                 </p>
                 
                 <div class="mt-4 text-break">

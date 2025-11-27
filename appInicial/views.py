@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.urls import reverse_lazy, reverse
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.db.models import Q
+from django.http import Http404
 
 from .models import Libro, Resena, Anuncio
 from .forms import LibroForm, ResenaForm
@@ -61,6 +62,14 @@ class DetalleLibro(DetailView):
     model = Libro
     context_object_name = 'libro'
     template_name = 'detalle_libro.html' 
+
+    def get(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object() 
+            return super().get(request, *args, **kwargs)
+        
+        except Http404:
+            return redirect(reverse('inicio'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
